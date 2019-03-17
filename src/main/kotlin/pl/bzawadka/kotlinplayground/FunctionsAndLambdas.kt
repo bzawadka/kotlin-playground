@@ -1,26 +1,35 @@
 package pl.bzawadka.kotlinplayground
 
+typealias Predicate<T> = (T) -> Boolean
+
 fun main(args: Array<String>) {
     instantiateFunctionTypes()
-    functionWithReceiverType()
+    functionTypeWithReceiverType()
+    functionUsingTypeAlias()
 }
 
 fun instantiateFunctionTypes() {
     println("*** FUNCTION TYPES ***")
 
-    // The compiler can infer the function type
-    // val oneArgumentFunction: (Int) -> Int = { i: Int -> i + 1 }
-    val oneArgumentFunction = { i: Int -> i + 1 }
-    println("next number from 1 is      " + oneArgumentFunction(1))
+    // The compiler can infer return type of the function
+    val increment_lambdaSyntax = { i: Int -> i + 1 }
+    println("next increment from 1 is      " + increment_lambdaSyntax(1))
 
-    val twoArgumentsFunction = { a: Int, b: Int -> a + b }
-    println("surely 2 + 3 equals        " + twoArgumentsFunction(2, 3))
+    val increment_FunctionTypeSyntax: (Int) -> Int = { i -> i + 1 }
+    println("next increment from 1 is      " + increment_FunctionTypeSyntax(1))
 
+    val sum_lambdaSyntax = { x: Int, y: Int -> x + y }
+    println("surely 2 + 3 equals        " + sum_lambdaSyntax(2, 3))
+
+    val sum_FunctionTypeSyntax: (Int, Int) -> Int = {x, y -> x + y}
+    println("surely 2 + 3 equals        " + sum_FunctionTypeSyntax(2, 3))
+
+    //                                function type
     val differentReturnTypeFunction: (String) -> Int = { it.toIntOrNull() ?: 0 }
     println("do I look like a number?   " + differentReturnTypeFunction("42"))
 }
 
-fun functionWithReceiverType() {
+fun functionTypeWithReceiverType() {
     // A.(B) -> C represents functions that can be called on a
     // receiver object of A
     // with a parameter of B
@@ -39,4 +48,27 @@ fun functionWithReceiverType() {
 
     println("run me 3 times             $result")
 }
+
+fun functionUsingTypeAlias() {
+    val isPositive: Predicate<Int> = {it > 0}
+    println("is 7 a positive number? " + isPositive(7))
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
